@@ -1,0 +1,18 @@
+
+body {
+   background: rgb(238,238,238);
+
+}
+article{
+    font-family: Georgia, sans-serif;
+}
+figure{
+background: rgb(255, 255, 255);
+}
+header{
+    font-family: Georgia,sans-serif;
+    size: 1em/1.2;
+}
+aside nav ul li a{
+    color: green;
+}
