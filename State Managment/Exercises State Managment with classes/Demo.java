@@ -11,7 +11,7 @@ public class Demo {
 
     public static void main(String[] args) throws IOException {
 
-        System.out.println("HTTPCOOKIE WITH CLASS IMPL...");
+
         String inputRequest = getRequestInfo();
         Request request = new Request(inputRequest);
         request.printRequestCookies();
@@ -20,8 +20,10 @@ public class Demo {
     private static String getRequestInfo() throws IOException {
         StringBuilder lines = new StringBuilder();
         String line;
-        while ((line = reader.readLine()) != null && !line.isEmpty()) {
-            lines.append(line).append("\r\n");
+        if ((line = reader.readLine()) != null && !line.isEmpty()) {
+            do {
+                lines.append(line).append("\r\n");
+            } while ((line = reader.readLine()) != null && !line.isEmpty());
         }
         lines.append("\r\n");
 

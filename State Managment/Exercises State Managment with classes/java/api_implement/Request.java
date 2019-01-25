@@ -1,10 +1,9 @@
 package main.java.api_implement;
 
 import main.java.api.HttpRequest;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+
+import java.util.*;
+import java.util.stream.IntStream;
 
 public class Request implements HttpRequest {
     private String method;
@@ -31,7 +30,7 @@ public class Request implements HttpRequest {
         this.cookies = new ArrayList<HttpCookie>();
         String[] inputParts = input.split("\r\n");
 
-        for (int i = 1; i < inputParts.length; i++) {
+        IntStream.range(1, inputParts.length).forEachOrdered(i -> {
             if (inputParts[i].contains(": ")) {
                 String[] headerKvp = inputParts[i].split(": ");
                 addHeader(headerKvp[0], headerKvp[1]);
@@ -45,15 +44,12 @@ public class Request implements HttpRequest {
                 }
 
             }
-        }
+        });
 
         if (headers.containsKey("Cookie")) {
 
             String[] cookiesLine = headers.get("Cookie").split(";\\s+");
-            for (int i = 0; i < cookiesLine.length; i++) {
-                String[] cookieParts = cookiesLine[i].split("=");
-                this.addCookies(new HttpCookie(cookieParts[0], cookieParts[1]));
-            }
+            Arrays.stream(cookiesLine).map(s -> s.split("=")).map(cookieParts -> new HttpCookie(cookieParts[0], cookieParts[1])).forEachOrdered(this::addCookies);
 
         }
 
@@ -129,7 +125,8 @@ public class Request implements HttpRequest {
     }
 
     public void printRequestCookies() {
-        for (HttpCookie cookie : this.getCookies()) {
+        for (Iterator<HttpCookie> iterator = this.getCookies().iterator(); iterator.hasNext(); ) {
+            HttpCookie cookie = iterator.next();
             System.out.println(cookie.getKey() + " < - > " + cookie.getValue());
         }
 
