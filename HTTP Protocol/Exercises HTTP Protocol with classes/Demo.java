@@ -21,7 +21,7 @@ public class Demo {
         Request request = new Request(requestInfo);
 
 
-        System.out.println(AppConstants.PARSING_REQUEST_WITH_CLASSES + "\n");
+
 
         // 2.check is url is valid
         String body;
@@ -59,8 +59,10 @@ public class Demo {
     private static String getRequestInfo() throws IOException {
         StringBuilder lines = new StringBuilder();
         String line;
-        while ((line = reader.readLine()) != null && !line.isEmpty()) {
-            lines.append(line).append("\r\n");
+        if ((line = reader.readLine()) != null && !line.isEmpty()) {
+            do {
+                lines.append(line).append("\r\n");
+            } while ((line = reader.readLine()) != null && !line.isEmpty());
         }
         lines.append("\r\n");
 

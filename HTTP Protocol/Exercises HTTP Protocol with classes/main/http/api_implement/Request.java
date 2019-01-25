@@ -5,7 +5,9 @@ import main.http.api.HttpRequest;
 
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.stream.IntStream;
 
 public class Request implements HttpRequest {
     private String method;
@@ -30,7 +32,7 @@ public class Request implements HttpRequest {
         this.bodyParameters = new HashMap<String, String>();
         String[] inputParts = input.split("\r\n");
 
-        for (int i = 1; i < inputParts.length; i++) {
+        IntStream.range(1, inputParts.length).forEachOrdered(i -> {
             if (inputParts[i].contains(": ")) {
                 String[] headerKvp = inputParts[i].split(": ");
                 addHeader(headerKvp[0], headerKvp[1]);
@@ -44,7 +46,7 @@ public class Request implements HttpRequest {
                 }
 
             }
-        }
+        });
 
 
     }
@@ -123,7 +125,8 @@ public class Request implements HttpRequest {
         result.append(AppConstants.GREETING).append(userName).append(AppConstants.SUCCESSFUL_CREATED).append(bodyParam.get(AppConstants.NAME)).append(" with ");
         boolean isFirst = true;
 
-        for (String key : bodyParam.keySet()) {
+        for (Iterator<String> iterator = bodyParam.keySet().iterator(); iterator.hasNext(); ) {
+            String key = iterator.next();
             if (!key.equals(AppConstants.NAME)) {
 
                 if (!isFirst) {

@@ -3,7 +3,9 @@ package main.http.api_implement;
 import main.http.api.HttpResponse;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.stream.Stream;
 
 public class Response implements HttpResponse {
     private String status;
@@ -19,12 +21,12 @@ public class Response implements HttpResponse {
         this.headers = new HashMap<String, String>();
         this.setBody(body);
 
-        for (String headerKey : new String[]{"Date", "Host", "Content-Type"}) {
+        Stream.of("Date", "Host", "Content-Type").forEachOrdered(headerKey -> {
             String headerValue = headers.get(headerKey);
             if (headerValue != null) {
                 this.addHeader(headerKey, headerValue);
             }
-        }
+        });
 
 
     }
@@ -79,7 +81,8 @@ public class Response implements HttpResponse {
     public String toString() {
         StringBuilder response = new StringBuilder();
         response.append(this.getStatusCode()).append("\r\n");
-        for (String key : headers.keySet()) {
+        for (Iterator<String> iterator = headers.keySet().iterator(); iterator.hasNext(); ) {
+            String key = iterator.next();
             String value = headers.get(key);
             if (value != null) {
                 response.append(key + ": " + value).append("\r\n");
