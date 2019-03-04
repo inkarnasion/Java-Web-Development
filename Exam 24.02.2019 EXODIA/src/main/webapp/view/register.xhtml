@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+
+<ui:composition template="templates/base_layout.xhtml">
+  <ui:define name="main-content">
+    <main class="mt-3">
+    <hr class="bg-exodia hr-2" />
+    <h1 class="text-center text-exodia">Register</h1>
+    <hr class="bg-exodia w-25 hr-2" />
+    <h:form class="mx-auto w-25">
+      <div class="form-group">
+        <div class="label-holder d-flex">
+          <h:outputLabel value="Username" for="username" class="text-exodia" />
+        </div>
+        <h:inputText label="UserName" value="#{userRegisterBean.userRegistrationBindingModel.userName}" class="form-control" id="username" required="true" a:placeholder="Username..." />
+      </div>
+      <div class="label-holder d-flex justify-content-center">
+        <h:message for="username" style="color: red" errorClass="alert alert-danger" />
+      </div>
+      <div class="form-group">
+        <div class="label-holder d-flex">
+          <h:outputLabel value="Password" for="password" class="text-exodia" />
+        </div>
+        <h:inputSecret value="#{userRegisterBean.userRegistrationBindingModel.password}" class="form-control" id="password" label="Password" required="true" a:placeholder="Password..." />
+      </div>
+      <div class="label-holder d-flex justify-content-center">
+        <h:message for="password" style="color: red" errorClass="alert alert-danger" />
+      </div>
+      <div class="form-group">
+        <div class="label-holder d-flex">
+          <h:outputLabel value="Confirm Password" for="password" class="text-exodia" />
+
+        </div>
+        <h:inputSecret value="#{userRegisterBean.userRegistrationBindingModel.confirmPassword}" class="form-control" id="confirmPassword" label="ConfirmPassword" required="true" a:placeholder="Confirm Password..." />
+      </div>
+      <div class="label-holder d-flex">
+        <h:message for="confirmPassword" style="color: red" errorClass="alert alert-danger" />
+      </div>
+      <div class="form-group">
+        <div class="label-holder d-flex">
+          <h:outputLabel value="Email" for="email" class="text-exodia" />
+        </div>
+        <h:inputText label="Email" value="#{userRegisterBean.userRegistrationBindingModel.email}" class="form-control" id="email" required="true" a:placeholder="Email..." />
+      </div>
+      <div class="label-holder d-flex justify-content-center">
+        <h:message for="email" style="color: red" errorClass="alert alert-danger" />
+      </div>
+	  <hr class="bg-exodia hr-2"/>
+      <div class="button-holder mt-4 d-flex justify-content-center">
+        <h:commandButton value="Register" class="btn bg-exodia text-white" action="#{userRegisterBean.register}" update="emailMessage" />
+      </div>
+    </h:form>
+    <hr class="bg-exodia hr-2 mt-5"/>
+    </main>
+  </ui:define>
+
+</ui:composition>
+
+</html>
